@@ -3,6 +3,7 @@ require "spreadsheet"
 class Payroll < ActiveRecord::Base
   belongs_to :account
   attr_accessible :name_chn, :name_eng, :number, :anniversary_gift_deduction, :annual_leave_not, :base_salary, :basis_of_housing_fund, :bonus, :computer_update_deduction, :current_annual_salary, :domestic_travel_allowance, :domestic_travel_allowance_deduction, :housing_fund, :increase_the_total, :individual_income_tax, :medical, :net_pay, :others, :others_deduction, :overseas_travel_allowance, :overseas_travel_allowance_deduction, :pension, :pension_base, :period, :real_net_pay, :receivables_deduction, :reimbursement_shall, :reimbursement_shall_deduction, :salary, :salary_before_tax, :salary_total, :social_security_adjustment, :social_security_base, :sub_total_for_individual, :tax_deductable_exp, :taxable_income, :total_allowance, :total_allowances, :unemploy
+  accepts_nested_attributes_for :account
 
   class << self
     def parse(payroll_file)
@@ -18,6 +19,42 @@ class Payroll < ActiveRecord::Base
       payrolls
     end
 
+    def parse_and_save(uploaded_payroll_file)
+      temp_payroll_file = Rails.root.join('payroll/temp-payroll.xls')
+
+      write_to_temp_file(uploaded_payroll_file, temp_payroll_file)
+
+      self.parse(temp_payroll_file).each do |payroll|
+        save_payroll(payroll)
+      end
+
+      delete(temp_payroll_file)
+    end
+
+    private
+
+    def save_payroll(parsed_payroll)
+      exist_payroll = Payroll.find_by_name_chn(parsed_payroll.name_chn)
+      if exist_payroll != nil
+        update_payroll(exist_payroll, parsed_payroll)
+      else
+        parsed_payroll.save
+      end
+    end
+
+    def update_payroll(exist_payroll, parsed_payroll)
+      updated_payroll_attributes = {}
+      parsed_payroll.attributes.each do |key, value|
+        updated_payroll_attributes[key] = value unless no_need_to_update(key)
+      end
+      exist_payroll.update_attributes updated_payroll_attributes
+    end
+
+    def no_need_to_update(key)
+      no_need_to_update_attributes = ["id", "account_id", "created_at", "updated_at"]
+      no_need_to_update_attributes.include? key
+    end
+
     def parse_each_payroll_row(row)
       payroll = Payroll.new
 
@@ -28,9 +65,13 @@ class Payroll < ActiveRecord::Base
       payroll
     end
 
-    def save(payroll)
-      payroll.each do |pr|
-        pr.save
+    def delete(payroll_file)
+      File.delete(payroll_file)
+    end
+
+    def write_to_temp_file(upload_payroll_file, temp_file)
+      File.open(temp_file, 'wb') do |file|
+        file.write(upload_payroll_file.read)
       end
     end
   end

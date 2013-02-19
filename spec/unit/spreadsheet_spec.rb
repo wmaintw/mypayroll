@@ -6,7 +6,7 @@ require "spreadsheet"
 describe "Read content from excel file" do
 
   before do
-    @book = Spreadsheet.open Rails.root.join("spec/data/test-payroll.xls")
+    @book = Spreadsheet.open Rails.root.join("spec/fixtures/test-payroll.xls")
     @sheet = @book.worksheet 0
   end
 

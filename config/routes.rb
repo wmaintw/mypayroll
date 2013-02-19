@@ -1,4 +1,8 @@
 Mypayroll::Application.routes.draw do
+
+  get 'admin/home' => 'admin#home'
+  post 'admin/upload' => 'admin#upload'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -4,7 +4,8 @@ require 'spec_helper'
 
 describe Payroll do
   before do
-    @payroll_file = Rails.root.join("spec/data/test-payroll.xls")
+    @payroll_file = Rails.root.join("spec/fixtures/test-payroll.xls")
+    @payroll_file_updated = Rails.root.join("spec/fixtures/test-payroll-updated.xls")
   end
 
   it "should parse payroll" do
@@ -58,9 +59,10 @@ describe Payroll do
     payroll.real_net_pay.should == 1037
   end
 
-  it "should save payroll to database" do
-    parsed_payrolls = Payroll.parse(@payroll_file)
-    Payroll.save(parsed_payrolls)
+  it "should parse and save payroll" do
+    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, nil, false)
+    Payroll.parse_and_save(payroll_file)
+
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
 
     retrieved_payroll.name_chn.should == "马伟"
@@ -71,5 +73,26 @@ describe Payroll do
 
     retrieved_payroll = Payroll.find_by_name_chn "不存在"
     retrieved_payroll.should == nil
+  end
+
+  it "should update payroll if payroll already exist" do
+    Payroll.count.should == 0
+
+    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, nil, false)
+    payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, nil, false)
+    Payroll.parse_and_save(payroll_file)
+
+    Payroll.count.should == 3
+    retrieved_payroll = Payroll.find_by_name_chn "马伟"
+    retrieved_payroll.should_not == nil
+    retrieved_payroll.current_annual_salary.should == 1000
+
+    Payroll.parse_and_save(payroll_file_updated)
+
+    Payroll.count.should == 3
+    retrieved_payroll = Payroll.find_by_name_chn "马伟"
+    retrieved_payroll.should_not == nil
+
+    retrieved_payroll.current_annual_salary.should == 1100
   end
 end
