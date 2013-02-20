@@ -60,7 +60,7 @@ describe Payroll do
   end
 
   it "should parse and save payroll" do
-    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, nil, false)
+    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
     Payroll.parse_to_database!(payroll_file)
 
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
@@ -78,8 +78,8 @@ describe Payroll do
   it "should update payroll if payroll already exist" do
     Payroll.count.should == 0
 
-    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, nil, false)
-    payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, nil, false)
+    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
+    payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, "application/vnd.ms-excel", false)
     Payroll.parse_to_database!(payroll_file)
 
     Payroll.count.should == 3
