@@ -1,3 +1,5 @@
+#require 'digest/sha2'
+
 class AdminAuthController < ApplicationController
   layout "auth_admin"
 
@@ -6,7 +8,11 @@ class AdminAuthController < ApplicationController
   end
 
   def create
-    admin = Admin.find_by_username_and_password params[:username], params[:password]
+    digest = Digest::SHA2.new
+    digest.update(params["password"])
+    password = digest.hexdigest
+
+    admin = Admin.find_by_username_and_password params[:username], password
     if admin
       redirect_to "/admin/home"
     else
