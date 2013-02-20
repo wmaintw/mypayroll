@@ -5,12 +5,14 @@
   <%= stylesheet_link_tag    "/css/bootstrap.min", :media => "all" %>
   <%= stylesheet_link_tag    "/css/customized", :media => "all" %>
   <%= javascript_include_tag "/js/jquery-1.9.1.min" %>
-  <%= javascript_include_tag "/js/bootstrap.min" %>
+  <%= javascript_include_tag "/js/bootstrap.min.js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<div class="container text-center">
 <%= yield %>
+</div>
 
 </body>
 </html>

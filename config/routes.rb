@@ -1,5 +1,7 @@
 Mypayroll::Application.routes.draw do
 
+  get 'admin/login' => 'admin_auth#new'
+  post 'admin/login' => 'admin_auth#create'
   get 'admin/home' => 'admin#home'
   post 'admin/upload' => 'admin#upload'
 

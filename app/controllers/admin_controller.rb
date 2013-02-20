@@ -1,6 +1,8 @@
 require 'spreadsheet'
 
 class AdminController < ApplicationController
+  layout "application"
+
   def home
 
   end

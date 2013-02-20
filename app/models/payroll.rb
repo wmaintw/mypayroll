@@ -38,7 +38,7 @@ class Payroll < ActiveRecord::Base
     private
 
     def save_payroll(parsed_payroll)
-      exist_payroll = Payroll.find_by_name_chn(parsed_payroll.name_chn)
+      exist_payroll = Payroll.find_by_name_chn_and_name_eng(parsed_payroll.name_chn, parsed_payroll.name_eng)
       if exist_payroll != nil
         update_payroll(exist_payroll, parsed_payroll)
       else
