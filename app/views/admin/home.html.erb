@@ -1,3 +1,7 @@
+<% if flash[:message] %>
+    <p><%= flash[:message] %></p>
+<% end %>
+
 <%= form_tag({:action => "upload"}, :multipart => true) do %>
     <div class="form-item">
       <label>File:</label>

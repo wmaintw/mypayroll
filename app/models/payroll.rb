@@ -19,16 +19,20 @@ class Payroll < ActiveRecord::Base
       payrolls
     end
 
-    def parse_and_save(uploaded_payroll_file)
+    def parse_to_database!(uploaded_payroll_file)
       temp_payroll_file = Rails.root.join('payroll/temp-payroll.xls')
+      begin
+        write_to_temp_file(uploaded_payroll_file, temp_payroll_file)
 
-      write_to_temp_file(uploaded_payroll_file, temp_payroll_file)
+        self.parse(temp_payroll_file).each do |payroll|
+          save_payroll(payroll)
+        end
 
-      self.parse(temp_payroll_file).each do |payroll|
-        save_payroll(payroll)
+        delete(temp_payroll_file)
+        true
+      rescue
+        false
       end
-
-      delete(temp_payroll_file)
     end
 
     private

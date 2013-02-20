@@ -6,8 +6,11 @@ class AdminController < ApplicationController
   end
 
   def upload
-    Payroll.parse_and_save(params[:file])
-
+    if Payroll.parse_to_database!(params[:file])
+      flash[:message] = "Payroll uploaded successfully."
+    else
+      flash[:message] = "Failed to upload payroll."
+    end
     redirect_to "/admin/home"
   end
 end

@@ -61,7 +61,7 @@ describe Payroll do
 
   it "should parse and save payroll" do
     payroll_file = Rack::Test::UploadedFile.new(@payroll_file, nil, false)
-    Payroll.parse_and_save(payroll_file)
+    Payroll.parse_to_database!(payroll_file)
 
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
 
@@ -80,14 +80,14 @@ describe Payroll do
 
     payroll_file = Rack::Test::UploadedFile.new(@payroll_file, nil, false)
     payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, nil, false)
-    Payroll.parse_and_save(payroll_file)
+    Payroll.parse_to_database!(payroll_file)
 
     Payroll.count.should == 3
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
     retrieved_payroll.should_not == nil
     retrieved_payroll.current_annual_salary.should == 1000
 
-    Payroll.parse_and_save(payroll_file_updated)
+    Payroll.parse_to_database!(payroll_file_updated)
 
     Payroll.count.should == 3
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
