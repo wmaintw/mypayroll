@@ -1,5 +1,3 @@
-#require 'digest/sha2'
-
 class AdminAuthController < ApplicationController
   layout "auth_admin"
 
