@@ -2,18 +2,33 @@
 
 require 'spec_helper'
 
-describe AdminController do
-  describe "GET home" do
-    it "render admin home page" do
-      get :home
-      response.should render_template("home")
+describe Admin::PayrollController do
+  describe "Authentication" do
+    it "should redirect to login page if not logged in" do
+      get :new
+      response.should redirect_to new_admin_auth_url
     end
   end
 
-  describe "POST upload" do
+  describe "visit payroll upload page" do
+    before do
+      session[:admin] = "true"
+    end
+
+    it "render payroll home page" do
+      get :new
+      response.should render_template("payroll/new")
+    end
+  end
+
+  describe "upload payroll" do
+    before do
+      session[:admin] = "true"
+    end
+
     it "accept payroll file" do
       params = {:file => fixture_file_upload("/test-payroll.xls")}
-      post :upload, params
+      post :create, params
 
       flash[:message].should == "Payroll uploaded successfully."
 
@@ -26,7 +41,7 @@ describe AdminController do
       Payroll.should_receive(:parse_to_database!).and_return(false)
 
       params = {:file => fixture_file_upload("/test-payroll.xls")}
-      post :upload, params
+      post :create, params
 
       flash[:message].should == "Failed to upload payroll."
     end

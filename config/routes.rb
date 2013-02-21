@@ -1,9 +1,15 @@
 Mypayroll::Application.routes.draw do
 
-  get 'admin/login' => 'admin_auth#new'
-  post 'admin/login' => 'admin_auth#create'
-  get 'admin/home' => 'admin#home'
-  post 'admin/upload' => 'admin#upload'
+  #get 'admin/login' => 'auth#new'
+  #post 'admin/login' => 'auth#create'
+  #get 'admin/logout' => 'auth#destroy'
+
+  namespace :admin do
+    resources :auth, :only => [:new, :create]
+    get 'logout' => 'auth#logout'
+
+    resources :payroll, :only => [:new, :create]
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -46,9 +52,9 @@ Mypayroll::Application.routes.draw do
   #   end
 
   # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
+  #   namespace :payroll do
+  #     # Directs /payroll/products/* to Admin::ProductsController
+  #     # (app/controllers/payroll/products_controller.rb)
   #     resources :products
   #   end
 

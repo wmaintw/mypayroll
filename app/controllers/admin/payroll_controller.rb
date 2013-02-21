@@ -1,18 +1,20 @@
 require 'spreadsheet'
 
-class AdminController < ApplicationController
-  layout "application"
+class Admin::PayrollController < ApplicationController
+  layout "application_admin"
 
-  def home
+  before_filter :auth
+
+  def new
 
   end
 
-  def upload
+  def create
     if Payroll.parse_to_database!(params[:file])
       flash[:message] = "Payroll uploaded successfully."
     else
       flash[:message] = "Failed to upload payroll."
     end
-    redirect_to "/admin/home"
+    redirect_to new_admin_payroll_path
   end
 end
