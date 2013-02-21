@@ -14,6 +14,7 @@ class AdminAuthController < ApplicationController
     if admin
       redirect_to "/admin/home"
     else
+      flash[:message] = "Login failed, please try again."
       redirect_to "/admin/login"
     end
   end
