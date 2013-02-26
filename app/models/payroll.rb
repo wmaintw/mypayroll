@@ -19,12 +19,15 @@ class Payroll < ActiveRecord::Base
       payrolls
     end
 
-    def parse_to_database!(uploaded_payroll_file)
+    def parse_to_database!(uploaded_payroll_file, payroll_for_month)
       temp_payroll_file = Rails.root.join('payroll/temp-payroll.xls')
+      payroll_date = Date.parse(payroll_for_month)
+
       begin
         write_to_temp_file(uploaded_payroll_file, temp_payroll_file)
 
         self.parse(temp_payroll_file).each do |payroll|
+          payroll.payroll_for_month = payroll_date
           save_payroll(payroll)
         end
 
@@ -47,11 +50,10 @@ class Payroll < ActiveRecord::Base
     end
 
     def update_payroll(exist_payroll, parsed_payroll)
-      updated_payroll_attributes = {}
       parsed_payroll.attributes.each do |key, value|
-        updated_payroll_attributes[key] = value unless no_need_to_update(key)
+        exist_payroll[key] = value unless no_need_to_update(key)
       end
-      exist_payroll.update_attributes updated_payroll_attributes
+      exist_payroll.save
     end
 
     def no_need_to_update(key)

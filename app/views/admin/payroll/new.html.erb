@@ -3,6 +3,13 @@
 <% end %>
 
 <%= form_tag({:action => "create"}, :multipart => true) do %>
+
+    <div class="form-item">
+      <label>Payroll for month:</label>
+      <%= select_year Date.today, :start_year => (Time.now.year - 1), :end_year => (Time.now.year + 1)  %>
+      <%= select_month Date.today, :add_month_numbers => true, :use_short_month => true %>
+    </div>
+
     <div class="form-item">
       <label>File:</label>
       <%= file_field_tag :file, :class => "span8" %>

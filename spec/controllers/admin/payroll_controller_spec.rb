@@ -27,7 +27,7 @@ describe Admin::PayrollController do
     end
 
     it "accept payroll file" do
-      params = {:file => fixture_file_upload("/test-payroll.xls")}
+      params = {:file => fixture_file_upload("/test-payroll.xls"), :date => {:year => 2013, :month => 2}}
       post :create, params
 
       flash[:message].should == "Payroll uploaded successfully."
@@ -35,12 +35,13 @@ describe Admin::PayrollController do
       payroll = Payroll.find_by_name_chn "马伟"
       payroll.should_not == nil
       payroll.salary.should == 1001
+      payroll.payroll_for_month.should == Date.new(2013, 02, 01)
     end
 
     it "should fail gracefully when upload payroll meet problem" do
       Payroll.should_receive(:parse_to_database!).and_return(false)
 
-      params = {:file => fixture_file_upload("/test-payroll.xls")}
+      params = {:file => fixture_file_upload("/test-payroll.xls"), :date => {:year => 2013, :month => 2}}
       post :create, params
 
       flash[:message].should == "Failed to upload payroll."

@@ -6,6 +6,8 @@ describe Payroll do
   before do
     @payroll_file = Rails.root.join("spec/fixtures/test-payroll.xls")
     @payroll_file_updated = Rails.root.join("spec/fixtures/test-payroll-updated.xls")
+    @payroll_for_month = "2013-02-01"
+    Payroll.delete_all
   end
 
   it "should parse payroll" do
@@ -61,7 +63,7 @@ describe Payroll do
 
   it "should parse and save payroll" do
     payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
-    Payroll.parse_to_database!(payroll_file)
+    Payroll.parse_to_database!(payroll_file, @payroll_for_month)
 
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
 
@@ -76,23 +78,24 @@ describe Payroll do
   end
 
   it "should update payroll if payroll already exist" do
+    Payroll.delete_all
     Payroll.count.should == 0
 
     payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
     payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, "application/vnd.ms-excel", false)
-    Payroll.parse_to_database!(payroll_file)
+    Payroll.parse_to_database!(payroll_file, @payroll_for_month)
 
     Payroll.count.should == 3
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
     retrieved_payroll.should_not == nil
     retrieved_payroll.current_annual_salary.should == 1000
 
-    Payroll.parse_to_database!(payroll_file_updated)
+    Payroll.parse_to_database!(payroll_file_updated, @payroll_for_month)
 
     Payroll.count.should == 3
-    retrieved_payroll = Payroll.find_by_name_chn "马伟"
-    retrieved_payroll.should_not == nil
+    retrieved_updated_payroll = Payroll.find_by_name_chn "马伟"
+    retrieved_updated_payroll.should_not == nil
 
-    retrieved_payroll.current_annual_salary.should == 1100
+    retrieved_updated_payroll.current_annual_salary.should == 1100
   end
 end
