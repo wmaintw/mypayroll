@@ -6,8 +6,9 @@ describe Payroll do
   before do
     @payroll_file = Rails.root.join("spec/fixtures/test-payroll.xls")
     @payroll_file_updated = Rails.root.join("spec/fixtures/test-payroll-updated.xls")
-    @payroll_for_month = "2013-02-01"
-    Payroll.delete_all
+    @payroll_file_another_month = Rails.root.join("spec/fixtures/test-payroll-another-month.xls")
+    @payroll_for_month_feb = "2013-02-01"
+    @payroll_for_month_jan = "2013-01-01"
   end
 
   it "should parse payroll" do
@@ -63,7 +64,7 @@ describe Payroll do
 
   it "should parse and save payroll" do
     payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
-    Payroll.parse_to_database!(payroll_file, @payroll_for_month)
+    Payroll.parse_to_database!(payroll_file, @payroll_for_month_feb)
 
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
 
@@ -78,24 +79,34 @@ describe Payroll do
   end
 
   it "should update payroll if payroll already exist" do
-    Payroll.delete_all
     Payroll.count.should == 0
 
     payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
     payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, "application/vnd.ms-excel", false)
-    Payroll.parse_to_database!(payroll_file, @payroll_for_month)
+    Payroll.parse_to_database!(payroll_file, @payroll_for_month_feb)
 
     Payroll.count.should == 3
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
     retrieved_payroll.should_not == nil
     retrieved_payroll.current_annual_salary.should == 1000
 
-    Payroll.parse_to_database!(payroll_file_updated, @payroll_for_month)
+    Payroll.parse_to_database!(payroll_file_updated, @payroll_for_month_feb)
 
     Payroll.count.should == 3
     retrieved_updated_payroll = Payroll.find_by_name_chn "马伟"
     retrieved_updated_payroll.should_not == nil
 
     retrieved_updated_payroll.current_annual_salary.should == 1100
+  end
+
+  it "should insert payroll for each month" do
+    payroll_file = Rack::Test::UploadedFile.new(@payroll_file, "application/vnd.ms-excel", false)
+    payroll_file_another_month = Rack::Test::UploadedFile.new(@payroll_file_another_month, "application/vnd.ms-excel", false)
+
+    Payroll.parse_to_database!(payroll_file, @payroll_for_month_feb)
+    Payroll.count.should == 3
+
+    Payroll.parse_to_database!(payroll_file_another_month, @payroll_for_month_jan)
+    Payroll.count.should == 6
   end
 end
