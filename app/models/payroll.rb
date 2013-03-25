@@ -2,7 +2,7 @@ require "spreadsheet"
 
 class Payroll < ActiveRecord::Base
   belongs_to :account
-  attr_accessible :name_chn, :name_eng, :number, :anniversary_gift_deduction, :annual_leave_not, :base_salary, :basis_of_housing_fund, :bonus, :computer_update_deduction, :current_annual_salary, :domestic_travel_allowance, :domestic_travel_allowance_deduction, :housing_fund, :increase_the_total, :individual_income_tax, :medical, :net_pay, :others, :others_deduction, :overseas_travel_allowance, :overseas_travel_allowance_deduction, :pension, :pension_base, :period, :real_net_pay, :receivables_deduction, :reimbursement_shall, :reimbursement_shall_deduction, :salary, :salary_before_tax, :salary_total, :social_security_adjustment, :social_security_base, :sub_total_for_individual, :tax_deductable_exp, :taxable_income, :total_allowance, :total_allowances, :unemploy
+  attr_accessible :name_chn, :name_eng, :number, :anniversary_gift_deduction, :annual_leave_not, :base_salary, :basis_of_housing_fund, :bonus, :computer_update_deduction, :current_annual_salary, :domestic_travel_allowance, :domestic_travel_allowance_deduction, :housing_fund, :increase_the_total, :individual_income_tax, :medical, :net_pay, :others, :others_deduction, :overseas_travel_allowance, :overseas_travel_allowance_deduction, :pension, :pension_base, :period, :real_net_pay, :receivables_deduction, :reimbursement_shall, :reimbursement_shall_deduction, :salary, :salary_before_tax, :salary_total, :social_security_adjustment, :social_security_base, :sub_total_for_individual, :tax_deductable_exp, :taxable_income, :total_allowance, :total_allowances, :unemploy, :payroll_for_month
   accepts_nested_attributes_for :account
 
   class << self
