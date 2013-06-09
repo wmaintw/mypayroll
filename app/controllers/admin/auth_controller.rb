@@ -16,7 +16,7 @@ class Admin::AuthController < ApplicationController
       redirect_to new_admin_payroll_url
     else
       flash[:message] = "Login failed, please try again."
-      redirect_to "/admin/login"
+      redirect_to "/admin/auth/new"
     end
   end
 

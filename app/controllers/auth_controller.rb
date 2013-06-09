@@ -13,7 +13,7 @@ class AuthController < ApplicationController
     #password = digest.hexdigest
 
     session[:account] = Account.new(:name_chn => "马伟", :name_eng => "Ma,Wei")
-    redirect_to "/payrolls"
+    redirect_to payroll_index_url
   end
 
   def logout

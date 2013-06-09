@@ -6,12 +6,19 @@ Mypayroll::Application.routes.draw do
 
   namespace :admin do
     resources :auth, :only => [:new, :create]
+    get 'login' => 'auth#new'
     get 'logout' => 'auth#logout'
 
     resources :payroll, :only => [:new, :create]
   end
 
+  resources :auth, :only => [:new, :create]
+  get 'login' => 'auth#new'
+  get 'logout' => 'auth#logout'
+
   resources :payroll, :only => [:index, :show]
+
+  root :to => 'auth#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
