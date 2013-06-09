@@ -3,7 +3,7 @@ require 'spreadsheet'
 class Admin::PayrollController < ApplicationController
   layout "application_admin"
 
-  before_filter :auth
+  before_filter :auth_admin
 
   def new
 

@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def auth
+  def auth_admin
     unless session[:admin] == "true"
       session[:admin] = nil
       redirect_to new_admin_auth_url
     end
   end
+
 end

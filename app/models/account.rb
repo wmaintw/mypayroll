@@ -5,8 +5,8 @@ class Account < ActiveRecord::Base
   class << self
 
 
-    def payrolls(account_name)
-      Payroll.find_all_by_name_chn account_name, {:order => "payroll_for_month desc"}
+    def payrolls(account_name_chn, account_name_eng)
+      Payroll.find_all_by_name_chn_and_name_eng account_name_chn, account_name_eng, {:order => "payroll_for_month desc"}
     end
   end
 end
