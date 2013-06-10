@@ -27,7 +27,7 @@ describe Admin::AuthController do
       .and_return(false)
 
     post :create, @incorrect_credential
-    response.should redirect_to "/admin/login"
+    response.should redirect_to "/admin/auth/new"
     flash[:message].should == "Login failed, please try again."
     session[:admin].should == nil
   end

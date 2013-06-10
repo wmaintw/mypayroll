@@ -1,9 +1,6 @@
 Mypayroll::Application.routes.draw do
 
-  #get 'admin/login' => 'auth#new'
-  #post 'admin/login' => 'auth#create'
-  #get 'admin/logout' => 'auth#destroy'
-
+  #routes for admin
   namespace :admin do
     resources :auth, :only => [:new, :create]
     get 'login' => 'auth#new'
@@ -12,12 +9,19 @@ Mypayroll::Application.routes.draw do
     resources :payroll, :only => [:new, :create]
   end
 
+  #routes for account
   resources :auth, :only => [:new, :create]
   get 'login' => 'auth#new'
   get 'logout' => 'auth#logout'
+  get 'activate' => 'auth#activate'
+  post 'do_activate' => 'auth#do_activate'
+  get 'password' => 'auth#password'
+  post 'password' => 'auth#set_password'
 
+  #routes for payroll
   resources :payroll, :only => [:index, :show]
 
+  #default route
   root :to => 'auth#new'
 
   # The priority is based upon order of creation:
