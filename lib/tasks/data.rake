@@ -1,5 +1,4 @@
 require 'SecureRandom'
-require 'digest'
 
 task :load_accounts => :environment do
   begin
@@ -35,13 +34,7 @@ def generate_email(employee_id)
 end
 
 def generate_password
-  password = SecureRandom.base64 5
-  encode_password password
-end
-
-def encode_password(password)
-  digest = Digest::SHA256.new
-  digest.hexdigest(password)
+  SecureRandom.base64 5
 end
 
 def close_file(f)
@@ -53,7 +46,7 @@ def create_account(employee_id, name_chn, name_eng)
   account.employee_id = employee_id
   account.name_chn = name_chn
   account.name_eng = name_eng
-  account.password = generate_password()
+  account.temp_password = generate_password()
   account.email = generate_email(employee_id)
   account.active = false
   account.save
