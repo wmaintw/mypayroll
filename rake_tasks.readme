@@ -1,0 +1,12 @@
+Tasks:
+load_accounts
+clear_accounts
+
+[load_accounts]
+1. put file to root directory of project, name it 'accounts.txt'
+2. format of the accounts.txt file:
+员工ID_中文名_英文名
+3. run task: rake load_accounts
+
+[clear_accounts]
+this will delete all the accounts in database.
