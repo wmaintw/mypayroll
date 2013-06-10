@@ -1,6 +1,7 @@
 Tasks:
 load_accounts
 clear_accounts
+send_activate_mail
 
 [load_accounts]
 1. put file to root directory of project, name it 'accounts.txt'
@@ -10,3 +11,7 @@ clear_accounts
 
 [clear_accounts]
 this will delete all the accounts in database.
+
+[send_activate_mail]
+this will find all inactive accounts and send activate mail to each of them.
+before run this task, please ensure mail settings in environment.rb is correct.

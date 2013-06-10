@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<h3>Hi, <%= @account.name_chn %> (<a href="#">this is not me</a>)</h3>
+<p>
+  This is your account in MyPayroll system: <br />
+  Username: <%= @account.email %><br/>
+  Password: <%= @account.temp_password %>
+</p>
+<p>
+  To login to the system, just follow this link: <a href="#">http://mypayroll.thoughtworks.com</a>.
+</p>
+<p>Thanks and have a great day!</p>
+</body>
+</html>
