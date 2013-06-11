@@ -18,12 +18,12 @@ class AuthController < ApplicationController
     account = Account.find_by_email_and_temp_password_and_active(email, password, false)
     if account.nil?
       flash[:message] = "Invalid credential, please confirm with system admin."
-      redirect_to :action => "activate"
+      redirect_to auth_activate_url
       return
     end
 
     session[:account] = account
-    redirect_to :action => "password"
+    redirect_to auth_password_url
   end
 
   def password
@@ -35,7 +35,7 @@ class AuthController < ApplicationController
 
     if account.nil?
       flash[:message] = "To activate your account, please login first."
-      redirect_to :action => "activate"
+      redirect_to auth_activate_url
       return
     end
 
@@ -43,7 +43,7 @@ class AuthController < ApplicationController
     password2 = params["password2"]
     unless password1.eql?(password2)
       flash[:message] = "Passwords are not consist with each other."
-      redirect_to :action => "password"
+      redirect_to auth_password_url
       return
     end
 
