@@ -13,10 +13,12 @@ Mypayroll::Application.routes.draw do
   resources :auth, :only => [:new, :create]
   get 'login' => 'auth#new'
   get 'logout' => 'auth#logout'
-  get 'activate' => 'auth#activate'
-  post 'do_activate' => 'auth#do_activate'
-  get 'password' => 'auth#password'
-  post 'password' => 'auth#set_password'
+
+  get 'auth/activate' => 'auth#activate'
+  post 'auth/activate' => 'auth#do_activate'
+
+  get 'auth/password' => 'auth#password'
+  post 'auth/password' => 'auth#set_password'
 
   #routes for payroll
   resources :payroll, :only => [:index, :show]

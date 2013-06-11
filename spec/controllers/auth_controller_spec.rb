@@ -23,7 +23,7 @@ describe AuthController do
     post :do_activate, params
 
     session[:account].should_not == nil
-    response.should redirect_to password_url
+    response.should redirect_to auth_password_url
   end
 
   it "should not login with incorrect credential" do
@@ -36,7 +36,7 @@ describe AuthController do
     post :do_activate, params
 
     session[:account].should == nil
-    response.should redirect_to activate_url
+    response.should redirect_to auth_activate_url
   end
 
   it "should open set password page" do
@@ -51,7 +51,7 @@ describe AuthController do
     post :set_password, params
 
     session[:account].should == nil
-    response.should redirect_to activate_url
+    response.should redirect_to auth_activate_url
   end
 
   it "should redirect to activate page given passwords are not consist with each other" do
@@ -61,13 +61,16 @@ describe AuthController do
     post :set_password, params
 
     session[:account].should_not == nil
-    response.should redirect_to password_url
+    response.should redirect_to auth_password_url
   end
 
   it "should activate account successfully" do
     params = {:password1 => "abc", :password2 => "abc"}
-    session[:account] = Account.new
-    Account.should_receive(:update)
+    id = 1
+    account = Account.new
+    account.id = id
+    session[:account] = account
+    Account.should_receive(:update).with(id, :password => digest_string(params[:password1]), :active => true)
 
     post :set_password, params
 
@@ -79,5 +82,10 @@ describe AuthController do
     get :logout
     flash[:message].should == "You have logged out."
     session[:account].should == nil
+  end
+
+  def digest_string(message)
+    digest = Digest::SHA2.new
+    digest.hexdigest(message)
   end
 end

@@ -52,10 +52,8 @@ class AuthController < ApplicationController
     redirect_to payroll_index_url
   end
 
-  def activate_account(account, password1)
-    account.password = digest_string(password1)
-    account.active = true
-    Account.update(account)
+  def activate_account(account, password)
+    Account.update(account.id, :password => digest_string(password), :active => true)
   end
 
   def create
@@ -74,14 +72,14 @@ class AuthController < ApplicationController
     redirect_to payroll_index_url
   end
 
-  def digest_string(message)
-    digest = Digest::SHA2.new
-    digest.hexdigest(message)
-  end
-
   def logout
     session[:account] = nil
     flash[:message] = "You have logged out."
     redirect_to :action => "new"
+  end
+
+  def digest_string(message)
+    digest = Digest::SHA2.new
+    digest.hexdigest(message)
   end
 end
