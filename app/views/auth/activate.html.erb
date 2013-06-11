@@ -5,7 +5,7 @@
 <p>Please login to activate your account.</p>
 
 <%= form_tag "/auth/activate", {:method => "post", :id => "login-form"} do %>
-    <%= text_field_tag "email", "", :class => "", :placeholder => "Email" %>
+    <%= text_field_tag "email", "", :class => "", :placeholder => "Email" %>@thoughtworks.com
     <%= password_field_tag "temp_password", "", :class => "", :placeholder => "Password" %>
     <%= submit_tag "Login", :class => "btn btn-primary" %>
 <% end %>

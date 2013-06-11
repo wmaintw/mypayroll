@@ -12,7 +12,7 @@ class AuthController < ApplicationController
   end
 
   def do_activate
-    email = params["email"]
+    email = format_email(params["email"])
     password = params["temp_password"]
 
     account = Account.find_by_email_and_temp_password_and_active(email, password, false)
@@ -52,12 +52,8 @@ class AuthController < ApplicationController
     redirect_to payroll_index_url
   end
 
-  def activate_account(account, password)
-    Account.update(account.id, :password => digest_string(password), :active => true)
-  end
-
   def create
-    email = params["email"]
+    email = format_email(params["email"])
     password = digest_string(params["password"])
 
     account = Account.find_by_email_and_password_and_active(email, password, true)
@@ -78,8 +74,18 @@ class AuthController < ApplicationController
     redirect_to :action => "new"
   end
 
+  private
+
+  def activate_account(account, password)
+    Account.update(account.id, :password => digest_string(password), :active => true)
+  end
+
   def digest_string(message)
     digest = Digest::SHA2.new
     digest.hexdigest(message)
+  end
+
+  def format_email(username)
+    "#{username}@thoughtworks.com"
   end
 end

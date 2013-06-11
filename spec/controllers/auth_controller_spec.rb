@@ -6,19 +6,45 @@ describe AuthController do
     session[:account] = nil
   end
 
+  it "should open login page" do
+    get :new
+    response.should render_template "auth/new"
+  end
+
+  it "should login successfully" do
+    params = {:email => "123", :password => "abc"}
+    Account.should_receive(:find_by_email_and_password_and_active)
+      .with("#{params[:email]}@thoughtworks.com", digest_string(params[:password]), true)
+      .and_return(Account.new)
+
+    post :create, params
+
+    response.should redirect_to payroll_index_url
+  end
+
+  it "should not login given incorrect credential" do
+    params = {:email => "incorrect email", :password => "incorrect password"}
+    Account.should_receive(:find_by_email_and_password_and_active)
+      .with("#{params[:email]}@thoughtworks.com", digest_string(params[:password]), true)
+      .and_return(nil)
+
+    post :create, params
+
+    response.should redirect_to new_auth_url
+  end
 
   it "should open activate login page" do
     get :activate
     response.should render_template "auth/activate"
   end
 
-  it "should login successfully with correct credential" do
+  it "should login successfully to activate account with correct credential" do
     account = Account.new
-    params = {:email => "123@thoughtworks.com", :temp_password => "abc"}
+    params = {:email => "123", :temp_password => "abc"}
 
     Account.should_receive(:find_by_email_and_temp_password_and_active)
-    .with(params[:email], params[:temp_password], false)
-    .and_return(account)
+      .with("#{params[:email]}@thoughtworks.com", params[:temp_password], false)
+      .and_return(account)
 
     post :do_activate, params
 
@@ -26,11 +52,11 @@ describe AuthController do
     response.should redirect_to auth_password_url
   end
 
-  it "should not login with incorrect credential" do
+  it "should not login to activate account with incorrect credential" do
     params = {:email => "incorrect email", :temp_password => "incorrect password"}
 
     Account.should_receive(:find_by_email_and_temp_password_and_active)
-    .with(params[:email], params[:temp_password], false)
+    .with("#{params[:email]}@thoughtworks.com", params[:temp_password], false)
     .and_return(nil)
 
     post :do_activate, params
