@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def auth_account
+    unless session[:account] != nil
+      redirect_to new_auth_url
+    end
+  end
+
 end
