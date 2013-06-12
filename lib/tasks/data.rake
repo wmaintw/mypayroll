@@ -54,6 +54,8 @@ end
 
 def parse_account(line)
   fields = line.split("_")
+  fields.collect! {|f| f.strip}
+
   {:employee_id => fields[0],
    :name_chn => fields[1],
    :name_eng => fields[2]}
