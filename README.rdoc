@@ -1,7 +1,7 @@
-## Welcome to My Payroll project ##
+== Welcome to My Payroll project
 
 This project is intended to help employee verify their payroll information easily, and reduce the work load of Finance Team.
 
-### CI ###
+=== CI
 
-<https://travis-ci.org/wmaintw/mypayroll>
+https://travis-ci.org/wmaintw/mypayroll
