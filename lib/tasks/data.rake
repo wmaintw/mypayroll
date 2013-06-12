@@ -1,4 +1,4 @@
-require 'SecureRandom'
+require 'securerandom'
 
 task :load_accounts => :environment do
   begin
