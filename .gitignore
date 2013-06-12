@@ -15,5 +15,6 @@
 /tmp
 /.idea
 /db/schema.rb
-/payroll
+/payroll/*.xls
+/payroll/*.xlsx
 *.txt
