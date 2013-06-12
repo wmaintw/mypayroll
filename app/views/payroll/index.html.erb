@@ -2,4 +2,17 @@
     <p class="alert"><%= flash[:message] %></p>
 <% end %>
 
-Here's your payrolls.
+<p>
+Here's your payrolls:
+</p>
+
+<div>
+  <p>Total Payrolls: <%= @payrolls.count %></p>
+  <ul>
+    <% @payrolls.each do |payroll| %>
+       <li>
+         <%= link_to payroll.payroll_for_month, payroll %>
+       </li>
+    <% end %>
+  </ul>
+</div>
