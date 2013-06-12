@@ -22,6 +22,13 @@ describe PayrollController do
     Payroll.delete_all
   end
 
+  it "should redirect to login page given user not logged in" do
+    session[:account] = nil
+
+    get :index
+    response.should redirect_to new_auth_url
+  end
+
   it "should open payroll list page" do
     get :index
     response.should render_template "payroll/index"
@@ -50,11 +57,24 @@ describe PayrollController do
     expect(assigns[:payrolls]).to match_array([matched_payroll])
   end
 
-  it "should redirect to login page given user not logged in" do
-    session[:account] = nil
+  it "should open payroll detail page for current account" do
+    session[:account] = @current_account
+    payroll = create_payroll(@current_account.name_chn, @current_account.name_eng, "2013-01-01")
+    params = {:id => payroll.id}
 
-    get :index
-    response.should redirect_to new_auth_url
+    get :show, params
+
+    expect(assigns[:payroll]).to eq(payroll)
+    end
+
+  it "should not open payroll detail page that is not for current account" do
+    session[:account] = @current_account
+    payroll = create_payroll(@non_current_account.name_chn, @non_current_account.name_eng, "2013-01-01")
+    params = {:id => payroll.id}
+
+    get :show, params
+
+    response.should redirect_to(payroll_index_url)
   end
 
 end
