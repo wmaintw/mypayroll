@@ -23,6 +23,9 @@ Mypayroll::Application.routes.draw do
   get 'auth/password' => 'auth#password'
   post 'auth/password' => 'auth#set_password'
 
+  get 'password' => 'password#edit'
+  post 'password' => 'password#update'
+
   #routes for payroll
   resources :payroll, :only => [:index, :show]
 

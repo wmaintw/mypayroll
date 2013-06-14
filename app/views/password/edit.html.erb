@@ -1,0 +1,10 @@
+<% if flash[:message] %>
+    <p class="alert"><%= flash[:message] %></p>
+<% end %>
+
+<%= form_tag "/password", {:method => "post", :id => "password-form"} do %>
+    <%= password_field_tag "old_password", "", :class => "", :placeholder => "Old Password" %>
+    <%= password_field_tag "new_password1", "", :class => "", :placeholder => "New Password" %>
+    <%= password_field_tag "new_password2", "", :class => "", :placeholder => "Re-enter New Password" %>
+    <%= submit_tag "Change", :class => "btn btn-primary" %>
+<% end %>
