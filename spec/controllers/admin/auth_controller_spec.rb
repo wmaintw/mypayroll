@@ -12,13 +12,14 @@ describe Admin::AuthController do
   end
 
   it "should login successfully with correct credential" do
+    admin = Admin.new
     Admin.should_receive(:find_by_username_and_password)
       .with(@correct_credential[:username], @correct_credential[:password_crypt])
-      .and_return(true)
+      .and_return(admin)
 
     post :create, @correct_credential
     response.should redirect_to new_admin_payroll_path
-    session[:admin].should == "true"
+    session[:admin].should eq(admin)
   end
 
   it "should failed when incorrect credential provided" do

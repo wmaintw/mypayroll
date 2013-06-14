@@ -6,6 +6,9 @@ Mypayroll::Application.routes.draw do
     get 'login' => 'auth#new'
     get 'logout' => 'auth#logout'
 
+    get 'password' => 'password#edit'
+    post 'password' => 'password#update'
+
     resources :payroll, :only => [:new, :create]
   end
 

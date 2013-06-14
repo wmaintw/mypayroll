@@ -4,14 +4,13 @@ class ApplicationController < ActionController::Base
   private
 
   def auth_admin
-    unless session[:admin] == "true"
-      session[:admin] = nil
+    if session[:admin] == nil
       redirect_to new_admin_auth_url
     end
   end
 
   def auth_account
-    unless session[:account] != nil
+    if session[:account] == nil
       redirect_to new_auth_url
     end
   end
