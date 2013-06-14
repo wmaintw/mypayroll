@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 class AuthController < ApplicationController
+  include Digest
   layout "auth_account"
 
   def new
@@ -80,10 +81,7 @@ class AuthController < ApplicationController
     Account.update(account.id, :password => digest_string(password), :active => true)
   end
 
-  def digest_string(message)
-    digest = Digest::SHA2.new
-    digest.hexdigest(message)
-  end
+
 
   def format_email(username)
     "#{username}@thoughtworks.com"
