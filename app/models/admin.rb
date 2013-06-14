@@ -8,7 +8,10 @@ class Admin < ActiveRecord::Base
     return false unless self.password.eql?(digest_string(old_password))
 
     encrypted_new_password = digest_string(new_password1)
-    self.password = encrypted_new_password
-    self.update_column(:password, encrypted_new_password)
+    result = self.update_column(:password, encrypted_new_password)
+    if result == true
+      self.password = encrypted_new_password
+    end
+    return result
   end
 end
