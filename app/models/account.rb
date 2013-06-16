@@ -21,4 +21,8 @@ class Account < ActiveRecord::Base
     end
     return result
   end
+
+  def my_payrolls
+    Payroll.find_all_by_employee_id self.employee_id
+  end
 end
