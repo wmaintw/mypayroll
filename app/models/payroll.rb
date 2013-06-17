@@ -6,12 +6,12 @@ class Payroll < ActiveRecord::Base
                   :basis_of_housing_fund, :bonus, :computer_update_deduction, :current_annual_salary,
                   :domestic_travel_allowance, :domestic_travel_allowance_deduction, :housing_fund,
                   :increase_the_total, :individual_income_tax, :medical, :net_pay, :others, :others_deduction,
-                  :overseas_travel_allowance, :overseas_travel_allowance_deduction, :pension, :pension_base,
+                  :overseas_travel_allowance, :overseas_travel_allowance_deduction, :pension,
                   :period, :real_net_pay, :receivables_deduction, :reimbursement_shall,
                   :reimbursement_shall_deduction, :salary, :salary_before_tax, :salary_total,
-                  :social_security_adjustment, :social_security_base, :sub_total_for_individual,
-                  :tax_deductable_exp, :taxable_income, :total_allowance, :total_allowances, :unemploy,
-                  :payroll_for_month, :employee_id
+                  :social_security_base, :sub_total_for_individual, :tax_deductable_exp, :taxable_income,
+                  :total_allowance, :unemploy, :payroll_for_month, :employee_id, :months_ticket_in_payroll,
+                  :four_insure_base, :total_deduction
   accepts_nested_attributes_for :account
 
   class << self
@@ -99,17 +99,18 @@ class Payroll < ActiveRecord::Base
 
   PAYROLL_ATTRIBUTES = {
       "number" => 0,
-      "name_chn" => 4,
-      "name_eng" => 5,
-      "period" => 6,
-      "current_annual_salary" => 9,
-      "salary" => 10,
+      "employee_id" => 4,
+      "name_chn" => 5,
+      "name_eng" => 6,
+      "period" => 7,
+      "current_annual_salary" => 12,
+      "salary" => 13,
       "base_salary" => 14,
       "total_allowance" => 15,
       "reimbursement_shall" => 16,
       "domestic_travel_allowance" => 17,
       "overseas_travel_allowance" => 18,
-      "social_security_adjustment" => 19,
+      "months_ticket_in_payroll" => 19,
       "annual_leave_not" => 20,
       "bonus" => 21,
       "others" => 22,
@@ -117,8 +118,8 @@ class Payroll < ActiveRecord::Base
       "salary_total" => 24,
       "basis_of_housing_fund" => 25,
       "housing_fund" => 26,
-      "pension_base" => 27,
-      "social_security_base" => 28,
+      "social_security_base" => 27,
+      "four_insure_base" => 28,
       "pension" => 29,
       "unemploy" => 30,
       "medical" => 31,
@@ -135,7 +136,7 @@ class Payroll < ActiveRecord::Base
       "computer_update_deduction" => 42,
       "anniversary_gift_deduction" => 43,
       "others_deduction" => 44,
-      "total_allowances" => 45,
+      "total_deduction" => 45,
       "real_net_pay" => 46
   }
 
