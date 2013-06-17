@@ -19,28 +19,24 @@ describe "Read content from excel file" do
   it "should read each row" do
     count = 0
     @sheet.each do |row|
-      row[0].to_s.length.should > 0
       count += 1
     end
 
-    count.should == 5
+    count.should == 9
   end
 
   it "should read each cell of row" do
     row = @sheet.row 2
 
-    row[0].should == 18
-    row[1].should == "PS"
-    row[2].should == "Developer"
-    row[3].should == "Consultant"
-    row[4].should == "马伟"
-    row[5].should == "Ma,Wei"
-    row[6].to_s.should == "2012-11-12"
-    row[7].to_s.should == "2012-04-05"
-    row[8].to_s.should == ""
-
-    for index in 9..(row.count - 1)
-      row[index].should >= 1000
-    end
+    row[0].should == 20
+    row[1].should == "IS"
+    row[2].should == "IS"
+    row[3].should == "Sr Associate"
+    row[5].should == "马伟"
+    row[6].should == "Ma,Wei"
+    row[7].to_s.should == "2013-04-04T00:00:00+00:00"
+    row[8].to_s.should == "2013-04-01T00:00:00+00:00"
+    row[9].to_s.should == ""
+    row[9].should be_nil
   end
 end

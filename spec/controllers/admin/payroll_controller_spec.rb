@@ -34,7 +34,9 @@ describe Admin::PayrollController do
 
       payroll = Payroll.find_by_name_chn "马伟"
       payroll.should_not == nil
-      payroll.salary.should == 1001
+
+      payroll.salary.should == 7142.86
+      payroll.total_allowance.should == 1000
       payroll.payroll_for_month.should == Date.new(2013, 02, 01)
     end
 

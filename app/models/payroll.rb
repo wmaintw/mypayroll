@@ -22,7 +22,8 @@ class Payroll < ActiveRecord::Base
       payrolls = []
       payroll_index_starts_from = 2
       sheet.each payroll_index_starts_from do |row|
-        payrolls << parse_each_payroll_row(row)
+        payroll_row = parse_each_payroll_row(row)
+        payrolls << payroll_row unless payroll_row.employee_id.nil?
       end
 
       payrolls
@@ -80,7 +81,11 @@ class Payroll < ActiveRecord::Base
       payroll = Payroll.new
 
       PAYROLL_ATTRIBUTES.each do |key, index|
-        payroll[key] = row[index]
+        if row[index].is_a?(Spreadsheet::Formula)
+          payroll[key] = row[index].value
+        else
+          payroll[key] = row[index]
+        end
       end
 
       payroll
