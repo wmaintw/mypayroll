@@ -23,6 +23,6 @@ class Account < ActiveRecord::Base
   end
 
   def my_payrolls
-    Payroll.find_all_by_employee_id self.employee_id
+    Payroll.find_all_by_employee_id_and_name_chn self.employee_id, self.name_chn, {:order => "payroll_for_month desc"}
   end
 end
