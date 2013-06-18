@@ -14,7 +14,12 @@ describe Payroll do
 
   it "should parse payroll" do
     parsed_payrolls = Payroll.parse(@payroll_file)
-    parsed_payrolls.count.should == 3
+    parsed_payrolls.count.should == 6
+  end
+
+  it "should parse payroll from each worksheet" do
+    parsed_payrolls = Payroll.parse(@payroll_file)
+    parsed_payrolls.count.should == 6
   end
 
   it "should parse payroll details" do
@@ -84,14 +89,14 @@ describe Payroll do
     payroll_file_updated = Rack::Test::UploadedFile.new(@payroll_file_updated, "application/vnd.ms-excel", false)
     Payroll.parse_to_database!(payroll_file, @payroll_for_month_feb)
 
-    Payroll.count.should == 3
+    Payroll.count.should == 6
     retrieved_payroll = Payroll.find_by_name_chn "马伟"
     retrieved_payroll.should_not == nil
     retrieved_payroll.current_annual_salary.should == 100000
 
     Payroll.parse_to_database!(payroll_file_updated, @payroll_for_month_feb)
 
-    Payroll.count.should == 3
+    Payroll.count.should == 6
     retrieved_updated_payroll = Payroll.find_by_name_chn "马伟"
     retrieved_updated_payroll.should_not == nil
 
@@ -103,9 +108,9 @@ describe Payroll do
     payroll_file_another_month = Rack::Test::UploadedFile.new(@payroll_file_another_month, "application/vnd.ms-excel", false)
 
     Payroll.parse_to_database!(payroll_file, @payroll_for_month_feb)
-    Payroll.count.should == 3
+    Payroll.count.should == 6
 
     Payroll.parse_to_database!(payroll_file_another_month, @payroll_for_month_jan)
-    Payroll.count.should == 6
+    Payroll.count.should == 9
   end
 end

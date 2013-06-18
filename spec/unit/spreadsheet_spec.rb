@@ -39,4 +39,18 @@ describe "Read content from excel file" do
     row[9].to_s.should == ""
     row[9].should be_nil
   end
+
+  it "should read data from each worksheet" do
+    @sheet_id = @book.worksheet("ID")
+    @sheet_beijing = @book.worksheet("BJ")
+    @sheet_xian = @book.worksheet("XA")
+    @sheet_chengdu = @book.worksheet("CD")
+    @sheet_shanghai = @book.worksheet("SH")
+
+    @sheet_id.column_count.should == 8
+    @sheet_beijing.row_count.should > 2
+    @sheet_xian.row_count.should > 2
+    @sheet_chengdu.row_count.should > 2
+    @sheet_shanghai.row_count.should > 2
+  end
 end

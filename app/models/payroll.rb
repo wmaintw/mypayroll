@@ -15,15 +15,21 @@ class Payroll < ActiveRecord::Base
   accepts_nested_attributes_for :account
 
   class << self
+    OFFICE_LOCATIONS = ["BJ", "XA", "CD", "SH"]
+
     def parse(payroll_file)
       book = Spreadsheet.open payroll_file
-      sheet = book.worksheet 0
-
-      payrolls = []
       payroll_index_starts_from = 2
-      sheet.each payroll_index_starts_from do |row|
-        payroll_row = parse_each_payroll_row(row)
-        payrolls << payroll_row unless payroll_row.employee_id.nil?
+      payrolls = []
+
+      OFFICE_LOCATIONS.each do |location|
+        sheet = book.worksheet(location)
+        next if sheet.nil?
+
+        sheet.each payroll_index_starts_from do |row|
+          payroll_row = parse_each_payroll_row(row)
+          payrolls << payroll_row unless payroll_row.employee_id.nil?
+        end
       end
 
       payrolls
@@ -32,6 +38,7 @@ class Payroll < ActiveRecord::Base
     def parse_to_database!(uploaded_payroll_file, payroll_for_month)
       temp_payroll_file = Rails.root.join('payroll/temp-payroll.xls')
       payroll_date = Date.parse(payroll_for_month)
+      result = nil
 
       begin
         write_to_temp_file(uploaded_payroll_file, temp_payroll_file)
@@ -41,11 +48,14 @@ class Payroll < ActiveRecord::Base
           save_payroll(payroll)
         end
 
-        delete(temp_payroll_file)
-        true
+        result = true
       rescue
-        false
+        result = false
+      ensure
+        delete(temp_payroll_file) unless temp_payroll_file.nil?
       end
+
+      result
     end
 
     private
@@ -60,9 +70,8 @@ class Payroll < ActiveRecord::Base
     end
 
     def find_exist_payroll(parsed_payroll)
-      Payroll.find_by_name_chn_and_name_eng_and_payroll_for_month(parsed_payroll.name_chn,
-                                            parsed_payroll.name_eng,
-                                            parsed_payroll.payroll_for_month)
+      Payroll.find_by_employee_id_and_payroll_for_month(parsed_payroll.employee_id,
+                                                        parsed_payroll.payroll_for_month)
     end
 
     def update_payroll(exist_payroll, parsed_payroll)
