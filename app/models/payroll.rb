@@ -102,6 +102,13 @@ class Payroll < ActiveRecord::Base
     end
   end
 
+  def my_payroll?(employee_id, name_chn)
+    return false if self.employee_id.nil? or self.name_chn.nil?
+    return false if employee_id.nil? or name_chn.nil?
+
+    self.employee_id.eql?(employee_id) and self.name_chn.eql?(name_chn)
+  end
+
   PAYROLL_ATTRIBUTES = {
       "number" => 0,
       "employee_id" => 4,
