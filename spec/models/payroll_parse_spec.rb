@@ -8,6 +8,7 @@ describe Payroll do
     @payroll_file = Rails.root.join("spec/fixtures/test-payroll.xls")
     @payroll_file_updated = Rails.root.join("spec/fixtures/test-payroll-updated.xls")
     @payroll_file_another_month = Rails.root.join("spec/fixtures/test-payroll-another-month.xls")
+    @payroll_file_error = Rails.root.join("spec/fixtures/test-payroll-error.xls")
     @payroll_for_month_feb = "2013-02-01"
     @payroll_for_month_jan = "2013-01-01"
   end
@@ -113,4 +114,10 @@ describe Payroll do
     Payroll.parse_to_database!(payroll_file_another_month, @payroll_for_month_jan)
     Payroll.count.should == 9
   end
+
+  it "should ignore parsed payroll given cell is error" do
+    parsed_payrolls = Payroll.parse(@payroll_file_error)
+    parsed_payrolls.count.should == 6
+  end
+
 end

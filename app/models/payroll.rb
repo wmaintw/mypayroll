@@ -90,7 +90,11 @@ class Payroll < ActiveRecord::Base
       payroll = Payroll.new
 
       PAYROLL_ATTRIBUTES.each do |key, index|
+        next if row[index].is_a?(Spreadsheet::Excel::Error)
+
         if row[index].is_a?(Spreadsheet::Formula)
+          next if row[index].value.is_a?(Spreadsheet::Excel::Error)
+
           payroll[key] = row[index].value
         else
           payroll[key] = row[index]
