@@ -1,18 +1,33 @@
-<% if flash[:message] %>
-    <p class="alert"><%= flash[:message] %></p>
-<% end %>
 
-<p>
-Here's your payrolls:
-</p>
+<div class="container">
+  <div class="row">
+    <div class="span12 center-container">
 
-<div>
-  <p>Total Payrolls: <%= @payrolls.count %></p>
-  <ul>
-    <% @payrolls.each do |payroll| %>
-       <li>
-         <%= link_to payroll.payroll_for_month, payroll %>
-       </li>
-    <% end %>
-  </ul>
+      <% if flash[:message] %>
+          <div class="alert">
+            <%= flash[:message] %>
+          </div>
+      <% end %>
+
+      <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+          <th>
+            Total Payrolls: <%= @payrolls.count %>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @payrolls.each do |payroll| %>
+        <tr>
+          <td>
+            <i class="icon-list-alt"></i> <%= link_to payroll.payroll_for_month, payroll %>
+          </td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
 </div>

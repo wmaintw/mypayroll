@@ -1,7 +1,18 @@
+body {
+
+}
+
 #login-form {
 
 }
 
 #login-form input {
     display: block;
+}
+
+.center-container {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
 }
