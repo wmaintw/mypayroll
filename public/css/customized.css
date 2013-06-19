@@ -1,13 +1,7 @@
+/* --------- base style --------- */
 body {
-
-}
-
-#login-form {
-
-}
-
-#login-form input {
-    display: block;
+    font-family: 'Helvetica Neue',helvetica,arial,sans-serif;
+    color: #111;
 }
 
 .center-container {
@@ -16,3 +10,28 @@ body {
     margin-right: auto;
     padding: 10px;
 }
+
+.more-info {
+    margin-bottom: 20px;
+}
+
+/* --------- override style --------- */
+.control-label {
+    font-weight: bold;
+}
+
+/* --------- login page --------- */
+
+#logo-container {
+    width: 300px;
+}
+
+#login-form {
+    width: 300px;
+    padding: 10px;
+}
+
+#login-form input[type="password"] {
+    width: 265px;
+}
+

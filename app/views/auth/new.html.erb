@@ -1,9 +1,37 @@
-<% if flash[:message] %>
-    <p class="alert"><%= flash[:message] %></p>
-<% end %>
 
-<%= form_tag "/auth", {:method => "post", :id => "login-form"} do %>
-    <%= text_field_tag "email", "", :class => "", :placeholder => "Email" %>@thoughtworks.com
-    <%= password_field_tag "password", "", :class => "", :placeholder => "Password" %>
-    <%= submit_tag "Login", :class => "btn btn-primary" %>
-<% end %>
+<div id="logo-container" class="center-container">
+  <h1>
+    MyPayroll
+  </h1>
+</div>
+
+<div id="login-form" class="center-container well">
+  <% if flash[:message] %>
+      <div class="alert"><%= flash[:message] %></div>
+  <% end %>
+
+  <%= form_tag "/auth", {:method => "post", :id => "login-form"} do %>
+      <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls input-append">
+          <%= text_field_tag "email", "", :class => "span2", :placeholder => "Employee Id" %>
+          <span class="add-on">@thoughtworks.com</span>
+        </div>
+        <div class="more-info">
+          <i class="icon-question-sign"></i>
+          <a href="#">How can I know my Employee Id?</a>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <%= password_field_tag "password", "", :placeholder => "Password" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn">Sign in</button>
+        </div>
+      </div>
+  <% end %>
+</div>
