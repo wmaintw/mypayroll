@@ -1,10 +1,40 @@
-<% if flash[:message] %>
-    <p class="alert"><%= flash[:message] %></p>
-<% end %>
 
-<%= form_tag "/password", {:method => "post", :id => "password-form"} do %>
-    <%= password_field_tag "old_password", "", :class => "", :placeholder => "Old Password" %>
-    <%= password_field_tag "new_password1", "", :class => "", :placeholder => "New Password" %>
-    <%= password_field_tag "new_password2", "", :class => "", :placeholder => "Re-enter New Password" %>
-    <%= submit_tag "Change", :class => "btn btn-primary" %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="span12 center-container">
+
+      <% if flash[:message] %>
+          <div class="alert">
+            <%= flash[:message] %>
+          </div>
+      <% end %>
+
+      <%= form_tag "/password", {:method => "post", :id => "password-form", :class => "form-horizontal"} do %>
+          <div class="control-group">
+            <label class="control-label" for="old_password">Old password</label>
+            <div class="controls">
+              <%= password_field_tag "old_password", "", :class => "", :placeholder => "" %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="new_password1">New password</label>
+            <div class="controls">
+              <%= password_field_tag "new_password1", "", :class => "", :placeholder => "" %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="new_password2">Re-enter new password</label>
+            <div class="controls">
+              <%= password_field_tag "new_password2", "", :class => "", :placeholder => "" %>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <button type="submit" class="btn btn-success">Change</button>
+            </div>
+          </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
