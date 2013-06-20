@@ -14,14 +14,14 @@
       <div class="control-group">
         <label class="control-label" for="email">Email</label>
         <div class="controls input-append">
-          <%= text_field_tag "email", "", :class => "span2", :placeholder => "Employee Id" %>
+          <%= text_field_tag "email", "", :class => "span2", :placeholder => "Employee Id", :maxlength => 5 %>
           <span class="add-on">@thoughtworks.com</span>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label" for="password">Password</label>
         <div class="controls">
-          <%= password_field_tag "temp_password", "", :placeholder => "Password" %>
+          <%= password_field_tag "temp_password", "", :placeholder => "Password", :maxlength => 32 %>
         </div>
       </div>
       <div class="control-group">

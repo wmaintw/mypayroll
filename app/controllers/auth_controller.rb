@@ -2,6 +2,7 @@
 
 class AuthController < ApplicationController
   include Digest
+  include ApplicationHelper
   layout "auth_account"
 
   def new
@@ -42,8 +43,21 @@ class AuthController < ApplicationController
 
     password1 = params["password1"]
     password2 = params["password2"]
-    unless password1.eql?(password2)
+
+    if password_not_provided?(password1, password2)
+      flash[:message] = "Please enter new password."
+      redirect_to auth_password_url
+      return
+    end
+
+    unless password_consist?(password1, password2)
       flash[:message] = "Passwords are not consist with each other."
+      redirect_to auth_password_url
+      return
+    end
+
+    if password1.length < 8
+      flash[:message] = "Password strength is not enough, must equal or longer than 8 chars."
       redirect_to auth_password_url
       return
     end
@@ -81,9 +95,15 @@ class AuthController < ApplicationController
     Account.update(account.id, :password => digest_string(password), :active => true)
   end
 
-
-
   def format_email(username)
     "#{username}@thoughtworks.com"
+  end
+
+  def password_not_provided?(password1, password2)
+    empty_field?(password1) or empty_field?(password2)
+  end
+
+  def password_consist?(password1, password2)
+    password1.eql?(password2)
   end
 end

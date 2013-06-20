@@ -90,8 +90,34 @@ describe AuthController do
     response.should redirect_to auth_password_url
   end
 
+  it "should redirect to activate page given passwords are not entered" do
+    account = Account.new
+    account.id = 1231
+    session[:account] = account
+    params = {:password1 => "", :password2 => ""}
+    Account.should_not_receive(:update)
+
+    post :set_password, params
+
+    session[:account].should_not == nil
+    response.should redirect_to auth_password_url
+  end
+
+  it "should redirect to activate page given length of password is not enough" do
+    account = Account.new
+    account.id = 1231
+    session[:account] = account
+    params = {:password1 => "1234567", :password2 => "1234567"}
+    Account.should_not_receive(:update)
+
+    post :set_password, params
+
+    session[:account].should_not == nil
+    response.should redirect_to auth_password_url
+  end
+
   it "should activate account successfully" do
-    params = {:password1 => "abc", :password2 => "abc"}
+    params = {:password1 => "abcd1234", :password2 => "abcd1234"}
     id = 1
     account = Account.new
     account.id = id
