@@ -1,9 +1,32 @@
-<% if flash[:message] %>
-    <p class="alert"><%= flash[:message] %></p>
-<% end %>
 
-<%= form_tag "/admin/auth", {:method => "post", :id => "login-form"} do %>
-    <%= text_field_tag "username", "", :class => "", :placeholder => "Username" %>
-    <%= password_field_tag "password", "", :class => "", :placeholder => "Password" %>
-    <%= submit_tag "Login", :class => "btn btn-primary" %>
-<% end %>
+<div id="logo-container" class="center-container">
+  <h1>
+    MyPayroll <small>Manage</small>
+  </h1>
+</div>
+
+<div id="login-form" class="center-container well">
+  <% if flash[:message] %>
+      <div class="alert"><%= flash[:message] %></div>
+  <% end %>
+
+  <%= form_tag "/admin/auth", {:method => "post", :id => "login-form"} do %>
+      <div class="control-group">
+        <label class="control-label" for="username">Username</label>
+        <div class="controls">
+          <%= text_field_tag "username", "", :class => "", :placeholder => "" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <%= password_field_tag "password", "", :placeholder => "Password" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Sign in</button>
+        </div>
+      </div>
+  <% end %>
+</div>
