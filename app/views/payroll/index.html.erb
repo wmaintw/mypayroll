@@ -21,7 +21,7 @@
         <% @payrolls.each do |payroll| %>
         <tr>
           <td>
-            <i class="icon-list-alt"></i> <%= link_to payroll.payroll_for_month, payroll %>
+            <i class="icon-list-alt"></i> <%= link_to payroll.payroll_for_month.strftime("%Y %B"), payroll %>
           </td>
         </tr>
         <% end %>
