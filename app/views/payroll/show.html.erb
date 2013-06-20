@@ -1,26 +1,373 @@
-<p>
-Detail of this payroll
-<a href="/payroll">Back to payroll center</a>
-</p>
 
-<div>
-  <p>
-    <span>name</span>
-    <span><%= @payroll.name_chn %></span>
-  </p>
+<div class="container">
+  <div class="row">
+    <div class="span12 center-container">
 
-  <p>
-    <span>name</span>
-    <span><%= @payroll.name_eng %></span>
-  </p>
+      <div class="page-header">
+        <h4>
+          Detail of the payroll
+          <small><a href="/payroll">Back</a></small>
+        </h4>
+      </div>
 
-  <p>
-    <span>salary</span>
-    <span><%= @payroll.salary %></span>
-  </p>
+      <div class="payroll-section">
+          <p>基本信息 Basic Info</p>
+          <div class="well">
 
-  <p>
-    <span>period</span>
-    <span><%= @payroll.period %></span>
-  </p>
+            <div class="row">
+              <div class="span5">
+                <span class="payroll-item-title">姓名 Name:</span>
+                <span class="payroll-item-content"><%= @payroll.name_chn %></span>
+              </div>
+              <div class="span1 column-spacer"></div>
+              <div class="span5">
+                <span class="payroll-item-title">员工号 Employee Id:</span>
+                <span class="payroll-item-content"><%= session[:account].employee_id %></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="span5">
+                <span class="payroll-item-title">年薪 Annual Salary After Raise:</span>
+                <span class="payroll-item-content"><%= @payroll.current_annual_salary %></span>
+              </div>
+              <div class="span1 column-spacer"></div>
+              <div class="span5">
+                <span class="payroll-item-title">月薪 Salary Monthly:</span>
+                <span class="payroll-item-content"><%= @payroll.salary %></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="span5">
+                <span class="payroll-item-title">期间 Period:</span>
+                <span class="payroll-item-content"><%= @payroll.period %></span>
+              </div>
+            </div>
+
+          </div>
+      </div>
+
+      <div class="payroll-section">
+        <p>薪资 Salary</p>
+        <div class="well">
+
+            <div class="row">
+              <div class="span5">
+                <span class="payroll-item-title">基本工资 Base Salary:</span>
+                <span class="payroll-item-content"><%= @payroll.base_salary %></span>
+              </div>
+              <div class="span1 column-spacer"></div>
+              <div class="span5">
+                <span class="payroll-item-title">综合补贴 Total allowance:</span>
+                <span class="payroll-item-content"><%= @payroll.total_allowance %></span>
+              </div>
+            </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">报销款计税 Reimbursement shall:</span>
+              <span class="payroll-item-content"><%= @payroll.reimbursement_shall %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">境内出差补助 Domestic travel allowance:</span>
+              <span class="payroll-item-content"><%= @payroll.domestic_travel_allowance %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">境外出差补助 Overseas travel allowance:</span>
+              <span class="payroll-item-content"><%= @payroll.overseas_travel_allowance %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title"> 12月票在当月工资并入工资中上税发放</span>
+              <span class="payroll-item-content"><%= @payroll.months_ticket_in_payroll %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">未休年假折算工资 Annual leave not:</span>
+              <span class="payroll-item-content"><%= @payroll.annual_leave_not %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">14薪发放 Bonus:</span>
+              <span class="payroll-item-content"><%= @payroll.bonus %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">其他调整项 Others:</span>
+              <span class="payroll-item-content"><%= @payroll.others %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">异动增加合计 Increase the total:</span>
+              <span class="payroll-item-content"><%= @payroll.increase_the_total %></span>
+            </div>
+          </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">工资总额 Total salary:</span>
+              <span class="payroll-item-content"><%= @payroll.salary_total %></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="payroll-section">
+        <p>保险和住房公积金 Insure and Housing found</p>
+
+        <div class="well">
+            <div class="row">
+              <div class="span5">
+                <span class="payroll-item-title">住房基数 Basis of housing fund:</span>
+                <span class="payroll-item-content"><%= @payroll.basis_of_housing_fund %></span>
+              </div>
+              <div class="span1 column-spacer"></div>
+              <div class="span5">
+                <span class="payroll-item-title">住房公积金 Housing fund 12%:</span>
+                <span class="payroll-item-content"><%= @payroll.housing_fund %></span>
+              </div>
+            </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">社保基数 Social Security base:</span>
+              <span class="payroll-item-content"><%= @payroll.social_security_base %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">四险基数 Social Security base2:</span>
+              <span class="payroll-item-content"><%= @payroll.four_insure_base %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">养老 Pension 8%:</span>
+              <span class="payroll-item-content"><%= @payroll.pension %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">失业 Unemploy 0.2%:</span>
+              <span class="payroll-item-content"><%= @payroll.unemploy %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">医疗 Medical 2%+3:</span>
+              <span class="payroll-item-content"><%= @payroll.medical %></span>
+            </div>
+          </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">个人支付小计 Sub Total for Individual:</span>
+              <span class="payroll-item-content"><%= @payroll.sub_total_for_individual %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="payroll-section">
+        <p>扣减 Deduction</p>
+        <div class="well">
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">税前工资 Salary before tax:</span>
+              <span class="payroll-item-content"><%= @payroll.salary_before_tax %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">税前扣除 Tax deductable exp.:</span>
+              <span class="payroll-item-content"><%= @payroll.tax_deductable_exp %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">应税工资 Taxable income:</span>
+              <span class="payroll-item-content"><%= @payroll.taxable_income %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">个人所得税 Individual income tax:</span>
+              <span class="payroll-item-content"><%= @payroll.individual_income_tax %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">税后工资 Net Pay:</span>
+              <span class="payroll-item-content"><%= @payroll.net_pay %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">报销款扣减 Reimbursement shall:</span>
+              <span class="payroll-item-content"><%= @payroll.reimbursement_shall %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">境内出差补助扣减 Domestic travel allowance:</span>
+              <span class="payroll-item-content"><%= @payroll.domestic_travel_allowance_deduction %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">OZ出差补助扣减 Overseas travel allowance:</span>
+              <span class="payroll-item-content"><%= @payroll.overseas_travel_allowance_deduction %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">应收款扣减 Receivables:</span>
+              <span class="payroll-item-content"><%= @payroll.receivables_deduction %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">电脑更新扣减 Computer update:</span>
+              <span class="payroll-item-content"><%= @payroll.computer_update_deduction %></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">周年礼物扣减 Anniversary gift:</span>
+              <span class="payroll-item-content"><%= @payroll.anniversary_gift_deduction %></span>
+            </div>
+            <div class="span1 column-spacer"></div>
+            <div class="span5">
+              <span class="payroll-item-title">其他扣减项目 Others:</span>
+              <span class="payroll-item-content"><%= @payroll.others_deduction %></span>
+            </div>
+          </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span5">
+              <span class="payroll-item-title">扣款合计 Total deductions:</span>
+              <span class="payroll-item-content"><%= @payroll.total_deduction %></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="payroll-section" id="payroll-total">
+        <p>合计 Total</p>
+        <div class="well">
+
+          <div class="row">
+            <div class="span2">
+              基本工资 Base salary
+            </div>
+            <div class="span3">
+              + 综合补贴 Total allowance
+            </div>
+            <div class="span3">
+              + 异动增加合计 Increase the total
+            </div>
+            <div class="span3">
+              = 工资总额 Total salary
+            </div>
+          </div>
+          <div class="row">
+            <div class="span2">
+              <%= @payroll.base_salary %>
+            </div>
+            <div class="span3">
+              + <%= @payroll.total_allowance %>
+            </div>
+            <div class="span3">
+              + <%= @payroll.increase_the_total %>
+            </div>
+            <div class="span3">
+              = <%= @payroll.salary_total %>
+            </div>
+          </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span8">
+              - 保险、公积金个人支付小计 Sub total for individual
+            </div>
+            <div class="span3">
+              = 税前工资 Salary before tax
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8">
+              - <%= @payroll.sub_total_for_individual %>
+            </div>
+            <div class="span3">
+              = <%= @payroll.salary_before_tax %>
+            </div>
+          </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span8">
+              - 个人所得税 Individual income tax
+            </div>
+            <div class="span3">
+              = 税后工资 Net pay
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8">
+              - <%= @payroll.individual_income_tax %>
+            </div>
+            <div class="span3">
+              = <%= @payroll.net_pay %>
+            </div>
+          </div>
+
+          <div class="row-spacer"></div>
+
+          <div class="row">
+            <div class="span8">
+              - 扣款合计 Total deductions:
+            </div>
+            <div class="span3">
+              = 实发税后工资 Total net pay
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8">
+              - <%= @payroll.total_deduction %>
+            </div>
+            <div class="span3">
+              = <%= @payroll.real_net_pay %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
