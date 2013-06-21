@@ -38,4 +38,28 @@ describe Admin do
 
     result.should be_false
   end
+
+  it "should not change password when new password is not provided" do
+    admin = Admin.new(:password => digest_string("password"))
+    old_password = "password"
+    new_password1 = ""
+    new_password2 = ""
+    admin.should_not_receive(:update_column)
+
+    result = admin.change_password(old_password, new_password1, new_password2)
+
+    result.should be_false
+  end
+
+  it "should not change password when strength of new password is not enough" do
+    admin = Admin.new(:password => digest_string("password"))
+    old_password = "password"
+    new_password1 = "1234567"
+    new_password2 = "1234567"
+    admin.should_not_receive(:update_column)
+
+    result = admin.change_password(old_password, new_password1, new_password2)
+
+    result.should be_false
+  end
 end

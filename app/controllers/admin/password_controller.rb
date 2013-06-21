@@ -13,7 +13,10 @@ class Admin::PasswordController < ApplicationController
       session[:admin] = admin
       flash[:message] = "Password changed successfully."
     else
-      flash[:message] = "Failed to change password, maybe old password is incorrect or new passwords are not consist."
+      flash[:message] = "Failed to change password, possible reason:
+                        (1) old password is incorrect,
+                        (2) new passwords are not consist,
+                        (3) password must equal or longer than 8 chars."
     end
 
     redirect_to admin_password_url
