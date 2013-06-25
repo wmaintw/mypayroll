@@ -36,3 +36,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+def digest_string(message)
+  digest = Digest::SHA2.new
+  digest.hexdigest(message)
+end

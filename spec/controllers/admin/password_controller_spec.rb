@@ -1,5 +1,4 @@
 require 'spec_helper'
-include Digest
 
 describe Admin::PasswordController do
   before do

@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class AuthController < ApplicationController
-  include Digest
   include ApplicationHelper
   layout "auth_account"
 

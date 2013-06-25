@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-include Digest
 
 describe Account do
   it "should change password when old and new password are correct" do

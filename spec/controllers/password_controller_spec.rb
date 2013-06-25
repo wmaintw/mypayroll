@@ -1,5 +1,4 @@
 require 'spec_helper'
-include Digest
 
 describe PasswordController do
   before do

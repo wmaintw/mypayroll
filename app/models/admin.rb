@@ -1,5 +1,4 @@
 class Admin < ActiveRecord::Base
-  include Digest
   include ApplicationHelper
 
   attr_accessible :ip, :last_login, :password, :username

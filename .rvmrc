@@ -1,1 +1,1 @@
-rvm use 1.9.3-p194@mypayroll-gemset --create
+rvm use jruby-1.7.4@mypayroll-gemset-jruby --create

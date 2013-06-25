@@ -1,5 +1,4 @@
 class Account < ActiveRecord::Base
-  include Digest
   include ApplicationHelper
   has_many :payrolls
   attr_accessible :active, :email, :name, :password, :name_chn, :name_eng, :employee_id, :temp_password

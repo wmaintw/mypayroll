@@ -1,5 +1,4 @@
 require 'spec_helper'
-include Digest
 
 describe Admin do
   it "should set new password successfully when old password is correct" do

@@ -1,4 +1,9 @@
 module ApplicationHelper
+  def digest_string(message)
+    digest = Digest::SHA2.new
+    digest.hexdigest(message)
+  end
+
   def empty_field?(field)
     field.nil? or field.eql?("")
   end
