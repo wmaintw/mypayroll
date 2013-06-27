@@ -9,7 +9,7 @@
           </div>
       <% end %>
 
-      <%= form_tag "/admin/password", {:method => "post", :id => "password-form", :class => "form-horizontal"} do %>
+      <%= form_tag ({:action => "update"}, {:method => "post", :id => "password-form", :class => "form-horizontal"}) do %>
         <div class="control-group">
           <label class="control-label" for="old_password">Old password</label>
           <div class="controls">

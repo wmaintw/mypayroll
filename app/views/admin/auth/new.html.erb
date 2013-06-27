@@ -10,7 +10,7 @@
       <div class="alert"><%= flash[:message] %></div>
   <% end %>
 
-  <%= form_tag "/admin/auth", {:method => "post", :id => "login-form"} do %>
+  <%= form_tag({:action => "create"}, {:multipart => true, :method => "post", :id => "login-form"}) do %>
       <div class="control-group">
         <label class="control-label" for="username">Username</label>
         <div class="controls">
