@@ -1,24 +1,22 @@
 # encoding: UTF-8
 
 require "spec_helper"
-require "spreadsheet"
+require "poi"
 
 describe "Read content from excel file" do
 
   before do
-    @book = Spreadsheet.open Rails.root.join("spec/fixtures/test-payroll.xls")
-    @sheet = @book.worksheet 0
+    @book = POI::Workbook.open(Rails.root.join("spec/fixtures/test-payroll.xls"))
+    @sheet = @book.worksheets[0]
   end
 
   it "should read the first row" do
-    row = @sheet.row 0
-
-    row[0].should == "No."
+    @sheet.rows[0][0].value.should == "No."
   end
 
   it "should read each row" do
     count = 0
-    @sheet.each do |row|
+    @sheet.rows.each do |row|
       count += 1
     end
 
@@ -26,31 +24,30 @@ describe "Read content from excel file" do
   end
 
   it "should read each cell of row" do
-    row = @sheet.row 2
+    row = @sheet.rows[2]
 
-    row[0].should == 20
-    row[1].should == "IS"
-    row[2].should == "IS"
-    row[3].should == "Sr Associate"
-    row[5].should == "马伟"
-    row[6].should == "Ma,Wei"
-    row[7].to_s.should == "2013-04-04T00:00:00+00:00"
-    row[8].to_s.should == "2013-04-01T00:00:00+00:00"
-    row[9].to_s.should == ""
-    row[9].should be_nil
+    row[0].value.should == 20
+    row[1].value.should == "IS"
+    row[2].value.should == "IS"
+    row[3].value.should == "Sr Associate"
+    row[5].value.should == "马伟"
+    row[6].value.should == "Ma,Wei"
+    row[7].value.to_s.should == "2013-04-04"
+    row[8].value.to_s.should == "2013-04-01"
+    row[9].value.to_s.should == ""
+    row[9].value.should be_nil
   end
 
   it "should read data from each worksheet" do
-    @sheet_id = @book.worksheet("ID")
-    @sheet_beijing = @book.worksheet("BJ")
-    @sheet_xian = @book.worksheet("XA")
-    @sheet_chengdu = @book.worksheet("CD")
-    @sheet_shanghai = @book.worksheet("SH")
+    @sheet_id = @book.worksheets["ID"]
+    @sheet_beijing = @book.worksheets["BJ"]
+    @sheet_xian = @book.worksheets["XA"]
+    @sheet_chengdu = @book.worksheets["CD"]
+    @sheet_shanghai = @book.worksheets["SH"]
 
-    @sheet_id.column_count.should == 8
-    @sheet_beijing.row_count.should > 2
-    @sheet_xian.row_count.should > 2
-    @sheet_chengdu.row_count.should > 2
-    @sheet_shanghai.row_count.should > 2
+    @sheet_beijing.rows.size.should > 2
+    @sheet_xian.rows.size.should > 2
+    @sheet_chengdu.rows.size.should > 2
+    @sheet_shanghai.rows.size.should > 2
   end
 end

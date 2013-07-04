@@ -1,4 +1,4 @@
-require "spreadsheet"
+require "poi"
 
 class Payroll < ActiveRecord::Base
   belongs_to :account
@@ -18,15 +18,16 @@ class Payroll < ActiveRecord::Base
     OFFICE_LOCATIONS = ["BJ", "XA", "CD", "SH"]
 
     def parse(payroll_file)
-      book = Spreadsheet.open payroll_file
+      book = POI::Workbook.open payroll_file
       payroll_index_starts_from = 2
       payrolls = []
 
       OFFICE_LOCATIONS.each do |location|
-        sheet = book.worksheet(location)
+        sheet = book.worksheets[location]
         next if sheet.nil?
 
-        sheet.each payroll_index_starts_from do |row|
+        sheet.rows.each_with_index do |row, index|
+          next if index < payroll_index_starts_from
           payroll_row = parse_each_payroll_row(row)
           payrolls << payroll_row unless payroll_row.employee_id.nil?
         end
@@ -52,7 +53,7 @@ class Payroll < ActiveRecord::Base
       rescue
         result = false
       ensure
-        delete(temp_payroll_file) unless temp_payroll_file.nil?
+        #delete(temp_payroll_file) unless temp_payroll_file.nil?
       end
 
       result
@@ -90,14 +91,14 @@ class Payroll < ActiveRecord::Base
       payroll = Payroll.new
 
       PAYROLL_ATTRIBUTES.each do |key, index|
-        next if row[index].is_a?(Spreadsheet::Excel::Error)
+        next if row[index].cell_type == POI::Cell::CELL_TYPE_ERROR
 
-        if row[index].is_a?(Spreadsheet::Formula)
-          next if row[index].value.is_a?(Spreadsheet::Excel::Error)
+        if row[index].cell_type == POI::Cell::CELL_TYPE_FORMULA
+          next if row[index].formula_value == POI::Cell::CELL_TYPE_ERROR
 
           payroll[key] = row[index].value
         else
-          payroll[key] = row[index]
+          payroll[key] = row[index].value
         end
       end
 

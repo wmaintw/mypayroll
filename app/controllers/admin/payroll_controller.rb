@@ -1,4 +1,3 @@
-require 'spreadsheet'
 
 class Admin::PayrollController < ApplicationController
   layout "application_admin"

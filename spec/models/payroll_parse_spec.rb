@@ -31,7 +31,7 @@ describe Payroll do
     payroll.number.should == 20
     payroll.name_chn.should == "马伟"
     payroll.name_eng.should == "Ma,Wei"
-    payroll.period.to_s.should == "2013-04-04T00:00:00+00:00"
+    payroll.period.to_s.should == "2013-04-04"
     payroll.current_annual_salary.should == 100000
     payroll.salary.should == 7142.86
     payroll.base_salary.should == 6142.86
