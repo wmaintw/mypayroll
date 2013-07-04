@@ -53,7 +53,7 @@ class Payroll < ActiveRecord::Base
       rescue
         result = false
       ensure
-        #delete(temp_payroll_file) unless temp_payroll_file.nil?
+        delete(temp_payroll_file) unless temp_payroll_file.nil?
       end
 
       result
